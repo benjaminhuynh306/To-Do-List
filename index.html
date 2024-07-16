@@ -9,12 +9,19 @@
 <body>
     <div class="container">
         <h1>To-Do List</h1>
+        <button id="toggle-dark-mode">Toggle Dark Mode</button>
         <div class="input-container">
             <input type="text" id="new-task" placeholder="Add a new task...">
+            <input type="date" id="due-date">
             <select id="priority">
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
+            </select>
+            <select id="category">
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Other">Other</option>
             </select>
             <button id="add-task-button">Add</button>
         </div>

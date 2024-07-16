@@ -10,10 +10,10 @@ body {
 
 .container {
     background-color: #fff;
-    padding: 20px;
+    padding: 30px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 600px;
 }
 
 h1 {
@@ -24,10 +24,27 @@ h1 {
 .input-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-input, select {
+input[type="text"] {
+    flex: 2;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+input[type="date"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+select {
     flex: 1;
     padding: 10px;
     border: 1px solid #ddd;
@@ -36,7 +53,7 @@ input, select {
 }
 
 button {
-    padding: 10px;
+    padding: 10px 20px;
     border: none;
     background-color: #28a745;
     color: #fff;
@@ -80,14 +97,68 @@ li.completed {
     background-color: #f8d7da;
 }
 
-
+.edit-button, .delete-button {
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
 
 .delete-button {
     background-color: #dc3545;
 }
 
-
+.edit-button:hover {
+    background-color: #e0a800;
+}
 
 .delete-button:hover {
     background-color: #c82333;
+}
+
+button#toggle-dark-mode {
+    background-color: #28a745;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+button#toggle-dark-mode:hover {
+    background-color: #218838;
+}
+
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+body.dark-mode .container {
+    background-color: #444;
+}
+
+body.dark-mode input, body.dark-mode select, body.dark-mode button {
+    background-color: #555;
+    color: #fff;
+}
+
+body.dark-mode .delete-button, body.dark-mode .edit-button {
+    background-color: #666;
+    color: #fff;
+}
+
+body.dark-mode .priority-high {
+    background-color: #f8d7da;
+}
+
+body.dark-mode .priority-medium {
+    background-color: #ffeeba;
+}
+
+body.dark-mode .priority-low {
+    background-color: #d4edda;
 }
