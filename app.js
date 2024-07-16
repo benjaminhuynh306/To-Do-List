@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const taskList = document.getElementById('task-list');
     const addTaskButton = document.getElementById('add-task-button');
 
+    // Save tasks to localStorage
     function saveTasks() {
         const tasks = [];
         taskList.querySelectorAll('li').forEach(function(taskItem) {
@@ -15,12 +16,15 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
+    // Load tasks from localStorage
     function loadTasks() {
         const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         tasks.forEach(function(task) {
             addTask(task.text, task.priority, task.completed);
         });
     }
+
+    // Assign numerical values to priorities for comparison
     function getPriorityRank(priority) {
         const ranks = {
             High: 1,
@@ -29,12 +33,15 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         return ranks[priority];
     }
-    function sortTasks() { //Sorts the tasks based on priority using getPriorityRank
+
+    // Sort tasks by priority (highest priority at the top)
+    function sortTasks() {
         const tasks = Array.from(taskList.children);
         tasks.sort((a, b) => getPriorityRank(a.dataset.priority) - getPriorityRank(b.dataset.priority));
         tasks.forEach(task => taskList.appendChild(task));
     }
 
+    // Add a new task to the list
     function addTask(text, priority, completed = false) {
         const taskItem = document.createElement('li');
         taskItem.dataset.priority = priority;
@@ -56,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             priorityInput.value = priority;
             taskList.removeChild(taskItem);
             saveTasks();
-            sortTasks(); 
+            sortTasks(); // Sort after editing a task
         });
         taskItem.appendChild(editButton);
 
@@ -66,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteButton.addEventListener('click', function() {
             taskList.removeChild(taskItem);
             saveTasks();
+            sortTasks(); // Sort after deleting a task
         });
         taskItem.appendChild(deleteButton);
 
@@ -73,14 +81,16 @@ document.addEventListener('DOMContentLoaded', function() {
             if (event.target !== editButton && event.target !== deleteButton) {
                 taskItem.classList.toggle('completed');
                 saveTasks();
+                sortTasks(); // Sort after marking a task as completed/incomplete
             }
         });
 
         taskList.appendChild(taskItem);
         saveTasks();
-        sortTasks();
+        sortTasks();  // Sort after adding a new task
     }
 
+    // Event listener for adding a new task
     addTaskButton.addEventListener('click', function() {
         const taskText = taskInput.value.trim();
         const taskPriority = priorityInput.value;
@@ -90,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Load and sort tasks on page load
     loadTasks();
-    sortTasks();
+    sortTasks();  // Ensure tasks are sorted after loading
 });
