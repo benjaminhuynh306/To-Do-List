@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const taskList = document.getElementById('task-list');
     const addTaskButton = document.getElementById('add-task-button');
 
+    console.log('Document loaded');  // Debugging output
+
     // Save tasks to localStorage
     function saveTasks() {
         const tasks = [];
@@ -55,17 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         taskText.classList.add('task-text');
         taskItem.appendChild(taskText);
 
-        const editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        editButton.classList.add('edit-button');
-        editButton.addEventListener('click', function() {
-            taskInput.value = taskText.textContent;
-            priorityInput.value = priority;
-            taskList.removeChild(taskItem);
-            saveTasks();
-            sortTasks(); // Sort after editing a task
-        });
-        taskItem.appendChild(editButton);
+      
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
@@ -78,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         taskItem.appendChild(deleteButton);
 
         taskItem.addEventListener('click', function(event) {
-            if (event.target !== editButton && event.target !== deleteButton) {
+            if (event.target !== deleteButton) {
                 taskItem.classList.toggle('completed');
                 saveTasks();
                 sortTasks(); // Sort after marking a task as completed/incomplete
@@ -90,13 +82,26 @@ document.addEventListener('DOMContentLoaded', function() {
         sortTasks();  // Sort after adding a new task
     }
 
-    // Event listener for adding a new task
-    addTaskButton.addEventListener('click', function() {
+    // Function to handle adding a task (both button click and enter key)
+    function handleAddTask() {
         const taskText = taskInput.value.trim();
         const taskPriority = priorityInput.value;
+        console.log('Adding task:', taskText, taskPriority);  // Debugging output
         if (taskText) {
             addTask(taskText, taskPriority);
             taskInput.value = '';
+        }
+    }
+
+    // Event listener for the "Add" button click
+    addTaskButton.addEventListener('click', handleAddTask);
+
+    // Event listener for pressing the "Enter" key in the task input field
+    taskInput.addEventListener('keydown', function(event) {
+        console.log('Key pressed:', event.key, event.keyCode);  // Debugging output
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            console.log('Enter key detected');  // Debugging output
+            handleAddTask();
         }
     });
 
