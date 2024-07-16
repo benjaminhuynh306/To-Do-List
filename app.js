@@ -21,6 +21,19 @@ document.addEventListener('DOMContentLoaded', function() {
             addTask(task.text, task.priority, task.completed);
         });
     }
+    function getPriorityRank(priority) {
+        const ranks = {
+            High: 1,
+            Medium: 2,
+            Low: 3
+        };
+        return ranks[priority];
+    }
+    function sortTasks() { //Sorts the tasks based on priority using getPriorityRank
+        const tasks = Array.from(taskList.children);
+        tasks.sort((a, b) => getPriorityRank(a.dataset.priority) - getPriorityRank(b.dataset.priority));
+        tasks.forEach(task => taskList.appendChild(task));
+    }
 
     function addTask(text, priority, completed = false) {
         const taskItem = document.createElement('li');
@@ -43,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
             priorityInput.value = priority;
             taskList.removeChild(taskItem);
             saveTasks();
+            sortTasks(); 
         });
         taskItem.appendChild(editButton);
 
@@ -64,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         taskList.appendChild(taskItem);
         saveTasks();
+        sortTasks();
     }
 
     addTaskButton.addEventListener('click', function() {
@@ -76,4 +91,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     loadTasks();
+    sortTasks();
 });
